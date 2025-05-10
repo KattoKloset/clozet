@@ -13,11 +13,11 @@ const config: PlaywrightTestConfig = {
   fullyParallel: true,
   testDir: './test',
   use: {
-    ...devices['Headless Chrome'],
+    ...devices['Desktop Chrome'],
     baseURL: baseUrl,
     headless: opts.headless,
   },
-  retries: 2,
+  retries: process.env.CI ? 2 : 0,
 }
 
 export default config
