@@ -25,6 +25,12 @@ jobs:
         node: ['18.x']
         os: [ubuntu-latest]
     steps:
+      -
+        name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Checkout repo
         uses: actions/checkout@v3
         with:
@@ -51,6 +57,9 @@ jobs:
         with:
           path: ${{ github.workspace }}/.next/cache
           key: ${{ runner.os }}-${{ runner.node }}-${{ hashFiles('**/pnpm-lock.yaml') }}-nextjs
+      - run: docker compose up --detach
+      
+      - run: docker container ls
 
       - name: Setup Prisma
         run: |
