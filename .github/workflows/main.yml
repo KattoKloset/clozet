@@ -1,5 +1,7 @@
 name: E2E-testing
 on: [push]
+env:
+  DATABASE_URL: postgresql://postgres:postgres@localhost:5932/clozet?schema=public
 jobs:
   e2e:
     defaults:
@@ -51,7 +53,9 @@ jobs:
           key: ${{ runner.os }}-${{ runner.node }}-${{ hashFiles('**/pnpm-lock.yaml') }}-nextjs
 
       - name: Setup Prisma
-        run: pnpm prebuild
+        run: |
+          export DATABASE_URL=$DATABASE_URL
+          pnpm prebuild
 
       - name: Build and test
         run: pnpm build && pnpm test-start && pnpm test-dev
