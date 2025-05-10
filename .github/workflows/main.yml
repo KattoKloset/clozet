@@ -56,8 +56,13 @@ jobs:
           export DATABASE_URL=$DATABASE_URL
           pnpm prebuild
 
-      - name: Build and test
-        run: pnpm build && pnpm test-start && pnpm test-dev
+      - name: Build
+        run: pnpm build
+      
+      - name: Test Start
+        run: pnpm test-start
+      - name: Test Dev
+        run: pnpm test-dev
 
       - name: Upload test results
         if: ${{ always() }}
