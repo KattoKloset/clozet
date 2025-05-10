@@ -2,6 +2,9 @@ name: E2E-testing
 on: [push]
 jobs:
   e2e:
+    defaults:
+      run:
+        working-directory: ./app
     services:
       postgres:
         image: postgres
