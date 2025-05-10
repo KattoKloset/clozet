@@ -1,7 +1,7 @@
 name: E2E-testing
 on: [push]
 env:
-  DATABASE_URL: postgresql://postgres:postgres@localhost:5932/clozet?schema=public
+  DATABASE_URL: postgresql://postgres:postgres@localhost:5432/clozet?schema=public
 jobs:
   e2e:
     defaults:
