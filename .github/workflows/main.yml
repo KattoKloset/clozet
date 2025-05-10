@@ -19,10 +19,12 @@ jobs:
     env:
       NODE_ENV: test
       NEXTAUTH_SECRET: supersecret
+      APP_URL: http://localhost:3000
+      WS_URL: ws://localhost:3001
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        node: ['18.x']
+        node: ['20.x']
         os: [ubuntu-latest]
     steps:
       - name: Checkout repo
