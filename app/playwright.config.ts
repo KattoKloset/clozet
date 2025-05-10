@@ -9,13 +9,15 @@ const opts = {
   // collectCoverage: !!process.env.PLAYWRIGHT_HEADLESS
 }
 const config: PlaywrightTestConfig = {
+  /* Run tests in files in parallel */
+  fullyParallel: true,
   testDir: './test',
   use: {
-    ...devices['Desktop Chrome'],
+    ...devices['Headless Chrome'],
     baseURL: baseUrl,
     headless: opts.headless,
   },
-  retries: process.env.CI ? 3 : 0,
+  retries: 2,
 }
 
 export default config
