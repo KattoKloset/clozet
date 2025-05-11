@@ -7,7 +7,7 @@ test('send message', async ({ browser, page }) => {
 
   await page.goto('http://localhost:3000/')
   await page.getByRole('button', { name: 'sign in', exact: true }).click()
-  await page.getByRole('textbox', { name: 'name' }).click()
+  await page.getByRole('textbox', { name: 'name' }).click({ force: true })
   await page.getByRole('textbox', { name: 'name' }).fill('test')
   await page.getByRole('button', { name: 'Sign in with Mocked GitHub' }).click()
   await page
