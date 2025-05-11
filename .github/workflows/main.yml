@@ -40,10 +40,8 @@ jobs:
       run: |
         export DATABASE_URL=$DATABASE_URL
         npm run prebuild
-
     - name: Build
       run: npm run build
-    
     - name: Test Start
       run: npm run test-start
     - name: Test Dev
