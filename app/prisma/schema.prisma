@@ -164,6 +164,7 @@ model Rental {
   rentalFee  Float
   penalty    Float?
   returnedAt DateTime?
+  returnNotes String?
   status     RentalStatus
 
   User User[]
