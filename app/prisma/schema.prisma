@@ -136,6 +136,8 @@ model Buyer {
   telegram  String?
   instagram String?
   address   String?
+  address2  String? // Represents the address's apartment, suite, unit number, etc.
+  postalCode  String?
   createdAt DateTime @default(now())
 
   orders  Order[]
@@ -220,4 +222,5 @@ enum RentalStatus {
 
 generator client {
   provider = "prisma-client-js"
+  output   = "./client"
 }
