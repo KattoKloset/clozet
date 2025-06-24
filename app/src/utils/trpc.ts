@@ -1,5 +1,11 @@
 import type { TRPCLink } from '@trpc/client'
-import { createWSClient, httpBatchLink, loggerLink, wsLink } from '@trpc/client'
+import {
+  createWSClient,
+  httpBatchLink,
+  loggerLink,
+  splitLink,
+  wsLink,
+} from '@trpc/client'
 import { createTRPCNext } from '@trpc/next'
 import { ssrPrepass } from '@trpc/next/ssrPrepass'
 import type { inferRouterOutputs } from '@trpc/server'
@@ -16,35 +22,41 @@ const { publicRuntimeConfig } = getConfig()
 const { APP_URL, WS_URL } = publicRuntimeConfig
 
 function getEndingLink(ctx: NextPageContext | undefined): TRPCLink<AppRouter> {
-  if (typeof window === 'undefined') {
-    return httpBatchLink({
-      /**
-       * @see https://trpc.io/docs/v11/data-transformers
-       */
-      transformer: superjson,
-      url: `${APP_URL}/api/trpc`,
-      headers() {
-        if (!ctx?.req?.headers) {
-          return {}
-        }
-        // on ssr, forward client's headers to the server
-        return {
-          ...ctx.req.headers,
-          'x-ssr': '1',
-        }
-      },
-    })
-  }
-  const client = createWSClient({
-    url: WS_URL,
-  })
-  return wsLink({
-    client,
-    /**
-     * @see https://trpc.io/docs/v11/data-transformers
-     */
+  const defaultClient = httpBatchLink({
     transformer: superjson,
+    url: `${APP_URL}/api/trpc`,
+    headers() {
+      if (!ctx?.req?.headers) {
+        return {}
+      }
+      // on ssr, forward client's headers to the server
+      return {
+        ...ctx.req.headers,
+        'x-ssr': '1',
+      }
+    },
   })
+
+  if (typeof window === 'undefined') return defaultClient
+
+  return splitLink({
+    condition(op) {
+      return Boolean(op.context.useWebsocket)
+    },
+    true: wsLink({
+      client: createWSClient({
+        url: WS_URL,
+      }),
+      transformer: superjson,
+    }),
+    false: defaultClient,
+  })
+}
+
+export const useWebsocket = {
+  context: {
+    useWebsocket: true,
+  },
 }
 
 /**
