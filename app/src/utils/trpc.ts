@@ -37,18 +37,20 @@ function getEndingLink(ctx: NextPageContext | undefined): TRPCLink<AppRouter> {
     },
   })
 
+  const wsClient = wsLink({
+    client: createWSClient({
+      url: WS_URL,
+    }),
+    transformer: superjson,
+  })
+
   if (typeof window === 'undefined') return defaultClient
 
   return splitLink({
     condition(op) {
       return Boolean(op.context.useWebsocket)
     },
-    true: wsLink({
-      client: createWSClient({
-        url: WS_URL,
-      }),
-      transformer: superjson,
-    }),
+    true: wsClient,
     false: defaultClient,
   })
 }
