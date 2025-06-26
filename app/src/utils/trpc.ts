@@ -40,6 +40,10 @@ function getEndingLink(ctx: NextPageContext | undefined): TRPCLink<AppRouter> {
   const wsClient = wsLink({
     client: createWSClient({
       url: WS_URL,
+      lazy: {
+        enabled: true,
+        closeMs: 120 * 1000, // 2 minutes
+      },
     }),
     transformer: superjson,
   })
