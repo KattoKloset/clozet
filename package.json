@@ -4,6 +4,7 @@
   },
   "scripts": {
     "prepare": "husky",
-    "dev": "docker-compose --profile development up -d"
+    "dev": "docker-compose --profile development up -d",
+    "down": "docker compose down"
   }
 }
