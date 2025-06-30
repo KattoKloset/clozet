@@ -1,48 +1,50 @@
-import { signIn } from 'next-auth/react'
-import { trpc } from '~/utils/trpc'
+// Example usage in a Next.js component or hook
 
-export default function IndexPage() {
-  const healthcheck = trpc.healthcheck.useQuery(undefined, {
-    enabled: false,
-    retry: false,
+import { trpc } from '~/utils/trpc' // Adjust the import path as needed
+import { useState } from 'react'
+import { signIn } from 'next-auth/react'
+
+export default function AddUserForm() {
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const addUser = trpc.user.add.useMutation({
+    trpc: {
+      context: {
+        telegramWebhook: true,
+      },
+    },
   })
 
-  const fetchThis = async () => {
-    const response = await healthcheck.refetch()
-    console.log(response.data)
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    await addUser.mutateAsync({ name, email, role: 'ADMIN' })
+    setName('')
+    setEmail('')
   }
 
   return (
     <>
-      <button onClick={() => fetchThis()}>Log In</button>
-      <br />
       <button onClick={() => signIn('auth0')}>Log In</button>
+      <form onSubmit={handleSubmit}>
+        <input
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Name"
+          required
+        />
+        <input
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Email"
+          type="email"
+          required
+        />
+        <button type="submit">'Add User'</button>
+        {addUser.error && (
+          <div style={{ color: 'red' }}>{addUser.error.message}</div>
+        )}
+        {addUser.isSuccess && <div style={{ color: 'green' }}>User added!</div>}
+      </form>
     </>
   )
 }
-
-/**
- * If you want to statically render this page
- * - Export `appRouter` & `createContext` from [trpc].ts
- * - Make the `opts` object optional on `createContext()`
- *
- * @see https://trpc.io/docs/v11/ssg
- */
-// export const getStaticProps = async (
-//   context: GetStaticPropsContext<{ filter: string }>,
-// ) => {
-//   const ssg = createServerSideHelpers({
-//     router: appRouter,
-//     ctx: await createContext(),
-//   });
-//
-//   await ssg.fetchQuery('post.all');
-//
-//   return {
-//     props: {
-//       trpcState: ssg.dehydrate(),
-//       filter: context.params?.filter ?? 'all',
-//     },
-//     revalidate: 1,
-//   };
-// };
