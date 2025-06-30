@@ -1,5 +1,5 @@
 # Use the official Node.js image as the base image
-FROM node:20-alpine
+FROM node:18.20.8-alpine
 
 # Set the working directory inside the container
 WORKDIR /usr/src/app
@@ -14,3 +14,6 @@ COPY prisma ./prisma
 RUN npm install
 
 RUN npm run generate
+
+EXPOSE 3000
+EXPOSE 3001
