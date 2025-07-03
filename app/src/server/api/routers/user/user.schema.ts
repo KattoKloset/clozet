@@ -1,5 +1,5 @@
 import { z } from 'zod/v4'
-import { UserRole } from '@/prisma/client'
+import { UserRole } from '@prisma/client'
 
 export const addUserSchema = z.object({
   name: z.string().min(3, 'Name needs to be at least 3 charaters long!'),
