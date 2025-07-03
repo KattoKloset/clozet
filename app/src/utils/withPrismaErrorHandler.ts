@@ -1,4 +1,4 @@
-import { PrismaClientKnownRequestError } from '@/prisma/client/runtime/library'
+import { Prisma } from '@prisma/client'
 import { TRPCError } from '@trpc/server'
 
 export function withPrismaErrorHandler<
@@ -8,7 +8,7 @@ export function withPrismaErrorHandler<
     try {
       return await resolver(...args)
     } catch (error) {
-      if (error instanceof PrismaClientKnownRequestError) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError) {
         switch (error.code) {
           case 'P2002':
             throw new TRPCError({
