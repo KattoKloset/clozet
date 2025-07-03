@@ -40,6 +40,7 @@
     "singleQuote": true
   },
   "dependencies": {
+    "@auth/express": "^0.11.0",
     "@auth/prisma-adapter": "^2.10.0",
     "@auth0/auth0-react": "^2.3.0",
     "@prisma/client": "^6.5.0",
@@ -51,9 +52,10 @@
     "@trpc/react-query": "^11.0.0",
     "@trpc/server": "^11.0.0",
     "clsx": "^2.0.0",
+    "cors": "^2.8.5",
     "express": "^5.1.0",
     "grammy": "^1.36.3",
-    "next": "^15.3.1",
+    "next": "^15.3.4",
     "next-auth": "5.0.0-beta.25",
     "postcss": "^8.5.3",
     "react": "^19.1.0",
@@ -71,6 +73,8 @@
     "@playwright/test": "^1.52.0",
     "@tailwindcss/postcss": "^4.0.15",
     "@tanstack/react-query-devtools": "^5.75.7",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.3",
     "@types/node": "^22.13.5",
     "@types/react": "^19.1.0",
     "@types/react-dom": "^19.0.0",

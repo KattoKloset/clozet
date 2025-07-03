@@ -27,7 +27,9 @@ export const authConfig = {
       clientSecret: AUTH0_CLIENT_SECRET,
       issuer: AUTH0_ISSUER,
       profile(profile) {
+        console.log(profile)
         return {
+          id: profile.sub,
           name: profile.name,
           role: profile.role ?? 'ADMIN',
           email: profile.email,
