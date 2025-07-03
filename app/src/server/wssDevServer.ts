@@ -3,7 +3,7 @@ import express from 'express'
 import http from 'http'
 import { Server } from 'ws'
 
-import type { Request } from 'express'
+import type { Request, Response } from 'express'
 import { AppRouter, appRouter as router } from '~/server/api/root'
 import { applyWSSHandler } from '@trpc/server/adapters/ws'
 
@@ -26,7 +26,6 @@ const wsHandler = applyWSSHandler<AppRouter>({
     // Cast req to any to satisfy getSession type, or update getSession to accept IncomingMessage
     const sessionRaw =
       (await getSession(opts.req as Request, authConfig)) ?? undefined
-    console.log(sessionRaw)
 
     // Transform session to match NextAuth.js Session type if needed
     let session: Session | null = null
