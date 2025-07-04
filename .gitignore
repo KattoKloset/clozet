@@ -146,3 +146,8 @@ dist
 
 /app/prisma
 /prisma/client
+
+# Manifest for PWA - Create your own from the example!
+/app/src/app/manifest.ts
+/app/public/*.png
+/app/public/*.ico
