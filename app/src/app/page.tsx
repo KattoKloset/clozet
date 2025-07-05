@@ -18,7 +18,7 @@ export default function Home() {
 
   return (
     <>
-      <button onClick={() => signIn('auth0')}>Log In</button>
+      <LoginButton />
       <form onSubmit={handleSubmit}>
         <input
           value={name}

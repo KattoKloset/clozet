@@ -44,8 +44,7 @@ services:
       - ./nginx/.env
     volumes:
       - nginx_secrets:/etc/letsencrypt
-      - ./nginx/letsencrypt:/var/www/letsencrypt
-      - ./nginx/user_conf.d:/etc/nginx/conf.d
+      - ./nginx/nginx_conf.d/:/etc/nginx/conf.d/
   prisma-studio:
     container_name: prisma-studio
     image: node:lts-alpine3.17
