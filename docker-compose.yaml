@@ -1,7 +1,7 @@
 services:
   postgres:
     container_name: postgres
-    image: postgres:13
+    image: postgres:17-alpine
     ports:
       - '5432:5432' # expose pg on port 5932 to not collide with pg from elsewhere
     restart: always

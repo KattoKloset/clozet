@@ -1,5 +1,4 @@
 'use client'
-import { signIn } from 'next-auth/react'
 import { api } from '~/trpc/react'
 import { useState } from 'react'
 
@@ -18,7 +17,6 @@ export default function Home() {
 
   return (
     <>
-      <LoginButton />
       <form onSubmit={handleSubmit}>
         <input
           value={name}
