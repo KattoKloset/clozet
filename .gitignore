@@ -147,6 +147,9 @@ dist
 /app/prisma
 /prisma/client
 
+# Terraform
+*.tfstate
+
 # Local .terraform directories
 **/.terraform/*
 
